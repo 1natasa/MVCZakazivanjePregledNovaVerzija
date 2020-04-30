@@ -10,6 +10,7 @@ using MVCZakazivanjePregleda.Models;
 
 namespace MVCZakazivanjePregleda.Controllers
 {
+    [Authorize]
     public class tblUstanovasController : Controller
     {
 

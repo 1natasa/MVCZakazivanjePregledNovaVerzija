@@ -45,7 +45,7 @@ namespace MVCZakazivanjePregleda.Models
         [System.ComponentModel.DisplayName("Broj telefona")]
         public string brojTelefonaPacijenta { get; set; }
 
-        [System.ComponentModel.DisplayName("lbo")]
+        [System.ComponentModel.DisplayName("LBO")]
         public string lbo { get; set; }
 
         [System.ComponentModel.DisplayName("Pacijent")]

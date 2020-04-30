@@ -10,6 +10,7 @@ using MVCZakazivanjePregleda.Models;
 
 namespace MVCZakazivanjePregleda.Controllers
 {
+    [Authorize]
     public class tblPregledsController : Controller
     {
         private ZakazivanjePregledaEntities db = new ZakazivanjePregledaEntities();
