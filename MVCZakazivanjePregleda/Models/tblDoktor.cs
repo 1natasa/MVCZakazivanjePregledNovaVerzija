@@ -34,7 +34,9 @@ namespace MVCZakazivanjePregleda.Models
         public Nullable<System.DateTime> datumRodjenjaDoktora { get; set; }
         [System.ComponentModel.DisplayName("Broj telefona")]
         public string brojTelefonaDoktora { get; set; }
+        
         [System.ComponentModel.DisplayName("Broj licence")]
+        [StringLength(4, ErrorMessage = "Broj licence mora da ima 4 karaktera", MinimumLength =4 )]
         public string brojLicence { get; set; }
 
         [System.ComponentModel.DisplayName("Specijalizacija")]

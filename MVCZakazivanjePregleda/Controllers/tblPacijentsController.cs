@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Windows;
 using MVCZakazivanjePregleda.Models;
 
 namespace MVCZakazivanjePregleda.Controllers
@@ -111,9 +112,17 @@ namespace MVCZakazivanjePregleda.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            tblPacijent tblPacijent = db.tblPacijents.Find(id);
-            db.tblPacijents.Remove(tblPacijent);
-            db.SaveChanges();
+            try
+            {
+                tblPacijent tblPacijent = db.tblPacijents.Find(id);
+                db.tblPacijents.Remove(tblPacijent);
+                db.SaveChanges();
+                
+            }
+            catch(Exception)
+            {
+                MessageBox.Show("Podatak je povezan u drugoj tabeli i nije ga moguce obrisati!");
+            }
             return RedirectToAction("Index");
         }
 

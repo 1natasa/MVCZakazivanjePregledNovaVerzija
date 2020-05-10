@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
+using System.Runtime.Remoting.Messaging;
 using System.Web;
 using System.Web.Mvc;
+using System.Windows;
 using MVCZakazivanjePregleda.Models;
 
 namespace MVCZakazivanjePregleda.Controllers
@@ -112,10 +115,20 @@ namespace MVCZakazivanjePregleda.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            tblUstanova tblUstanova = db.tblUstanovas.Find(id);
-            db.tblUstanovas.Remove(tblUstanova);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                tblUstanova tblUstanova = db.tblUstanovas.Find(id);
+                db.tblUstanovas.Remove(tblUstanova);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch(Exception)
+            {
+                MessageBox.Show("Podatak je povezan u drugoj tabeli i nije ga moguce obrisati!");
+            }
+            
+            return RedirectToAction("Index");            
+          
         }
 
         protected override void Dispose(bool disposing)

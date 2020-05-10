@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Windows;
 using MVCZakazivanjePregleda.Models;
 
 namespace MVCZakazivanjePregleda.Controllers
@@ -116,9 +117,17 @@ namespace MVCZakazivanjePregleda.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            tblPodtipPregleda tblPodtipPregleda = db.tblPodtipPregledas.Find(id);
-            db.tblPodtipPregledas.Remove(tblPodtipPregleda);
-            db.SaveChanges();
+            try
+            {
+                tblPodtipPregleda tblPodtipPregleda = db.tblPodtipPregledas.Find(id);
+                db.tblPodtipPregledas.Remove(tblPodtipPregleda);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch(Exception)
+            {
+                MessageBox.Show("Ovaj podatak je povezan u drugoj tabeli i nije ga moguce obrisati");
+            }
             return RedirectToAction("Index");
         }
 

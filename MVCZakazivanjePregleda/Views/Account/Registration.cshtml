@@ -6,49 +6,86 @@
 
 <h2>Registracija korisnika</h2>
 
-
-@using (Html.BeginForm()) 
+@if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
 {
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.emailKorisnika, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.emailKorisnika, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.emailKorisnika, "", new { @class = "text-danger" })
+    if (ViewBag.message != null)
+    {
+        <div class="alert alert-success">
+            <strong>Uspesno!</strong> ViewBag.message
+        </div>
+    }
+}
+else
+{
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.emailKorisnika, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.emailKorisnika, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.emailKorisnika, "", new { @class = "text-danger" })
+                    @Html.ValidationMessage("EmailExist", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.korisnickoIme, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.korisnickoIme, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.korisnickoIme, "", new { @class = "text-danger" })
+                    @Html.ValidationMessage("UsernameExist", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.sifraKorisnika, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.sifraKorisnika, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.sifraKorisnika, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.potvrdjenaSifra, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.potvrdjenaSifra, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.potvrdjenaSifra, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Registruj se" class="btn btn-default" />
+                    
+                </div>
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.korisnickoIme, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.korisnickoIme, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.korisnickoIme, "", new { @class = "text-danger" })
+        if (ViewBag.message != null)
+        {
+            <div class="alert alert-danger">
+                <strong>Greska!</strong>ViewBag.message
             </div>
-        </div>
+        }
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.sifraKorisnika, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.PasswordFor(model => model.sifraKorisnika, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.sifraKorisnika, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Registruj se" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
+    }
+
 }
 
+
+
+
 <div>
-    @Html.ActionLink("Link za logovanje", "Login")
+     @Html.ActionLink("Link za logovanje", "Login") 
 </div>
 
 @section Scripts {

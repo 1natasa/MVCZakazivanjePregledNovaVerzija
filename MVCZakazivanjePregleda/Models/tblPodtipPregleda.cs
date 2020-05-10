@@ -16,7 +16,7 @@ namespace MVCZakazivanjePregleda.Models
     {
         public int podtipPregledaID { get; set; }
 
-        [System.ComponentModel.DisplayName("Pod tip pregleda")]
+        [System.ComponentModel.DisplayName("Podtip pregleda")]
         public string nazivPodtipaPregleda { get; set; }
         public Nullable<int> tipPregledaID { get; set; }
     

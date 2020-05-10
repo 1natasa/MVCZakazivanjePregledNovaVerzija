@@ -20,10 +20,12 @@ namespace MVCZakazivanjePregleda.Controllers
         {
             using (var context = new ZakazivanjePregledaEntities())
             {
+                
                 bool isValid = context.tblKorisniks.Any(x => x.korisnickoIme == model.korisnickoIme && x.sifraKorisnika == model.sifraKorisnika);
                 if(isValid)
                 {
                     FormsAuthentication.SetAuthCookie(model.korisnickoIme, false);
+                   
                     return RedirectToAction("Index", "Home");
                 }
                 
@@ -42,18 +44,80 @@ namespace MVCZakazivanjePregleda.Controllers
         [HttpPost]
         public ActionResult Registration(tblKorisnik model)
         {
-            using (var contex = new ZakazivanjePregledaEntities())
+
+            bool Status = false;
+            string message = "";
+            
+            
+            if (ModelState.IsValid)
+            {
+                var isExist = IsEmailExist(model.emailKorisnika);
+                var isExistUsername = IsUsernameExist(model.korisnickoIme);
+                if(isExist)
+                {
+                    ModelState.AddModelError("EmailExist", "Email vec postoji");
+                    return View(model);
+                }
+
+                if (isExistUsername)
+                {
+                    ModelState.AddModelError("UsernameExist", "Korisnicko ime vec postoji");
+                    return View(model);
+                }
+
+
+                using (ZakazivanjePregledaEntities db = new ZakazivanjePregledaEntities())
+                {
+                    db.tblKorisniks.Add(model);
+                    db.SaveChanges();
+                    
+                    Status = true;
+                    message = "Uspesno ste se registrovali";
+                   
+                    
+                }
+
+            } else
+            {
+                message = "Nespesan zahtev!";
+            }
+
+            /*using (var contex = new ZakazivanjePregledaEntities())
             {
                 contex.tblKorisniks.Add(model);
                 contex.SaveChanges();
-            }
-            return RedirectToAction("Login");
+            }*/
+
+            ViewBag.Message = message;
+            ViewBag.Status = Status;
+            //return RedirectToAction("Login");
+            return View("SuccessfulLogin");
         }
 
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
             return RedirectToAction("Login");
+        }
+
+        [NonAction]
+        public bool IsEmailExist(string emailKorisnika)
+        {
+            using (ZakazivanjePregledaEntities db = new ZakazivanjePregledaEntities())
+            {
+                var v = db.tblKorisniks.Where(a => a.emailKorisnika == emailKorisnika).FirstOrDefault();
+                return v != null;
+
+            }
+        }
+        [NonAction]
+        public bool IsUsernameExist(string username)
+        {
+            using (ZakazivanjePregledaEntities db = new ZakazivanjePregledaEntities())
+            {
+                var v = db.tblKorisniks.Where(a => a.korisnickoIme == username).FirstOrDefault();
+                return v != null;
+            }
         }
     }
 }

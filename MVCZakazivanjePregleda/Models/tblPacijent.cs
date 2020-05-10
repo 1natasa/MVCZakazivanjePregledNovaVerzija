@@ -41,11 +41,13 @@ namespace MVCZakazivanjePregleda.Models
         public Nullable<System.DateTime> datumRodjenjaPacijenta { get; set; }
 
         [System.ComponentModel.DisplayName("JMBG")]
+        [StringLength(13, ErrorMessage = "JMBG mora da ima 13 karaktera", MinimumLength = 13)]
         public string jmbgPacijenta { get; set; }
         [System.ComponentModel.DisplayName("Broj telefona")]
         public string brojTelefonaPacijenta { get; set; }
 
         [System.ComponentModel.DisplayName("LBO")]
+        [StringLength(6, ErrorMessage = "LBO mora da ima 6 karaktera", MinimumLength = 6)]
         public string lbo { get; set; }
 
         [System.ComponentModel.DisplayName("Pacijent")]
